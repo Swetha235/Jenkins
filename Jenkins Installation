@@ -1,0 +1,27 @@
+############   JENKINS INSTALLATION ON AWS LINUX ###############################
+
+https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+
+ sudo yum update –y
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo yum upgrade
+sudo yum install java-21-amazon-corretto -y
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+#################################################################
+
+************** TOMCAT Users file ************************
+
+<?xml version="1.0" encoding="utf-8"?>
+<tomcat-users>
+<role rolename="manager-gui"/>
+<user username="tomcat" password="tomcat" roles="manager-gui, manager-script, manager-status"/>
+</tomcat-users>
+
