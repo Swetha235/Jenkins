@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('clone from SCM') {
+            steps {
+                echo 'cloning the code from scm'
+				git branch: 'main', url: 'https://github.com/Swetha235/mindcircuit16d.git'
+            }
+        }
+
+        stage('build artificat') {
+            steps {
+                echo 'building artifact using maven'
+				sh 'mvn clean install'
+            }
+        }
+	
+        stage('deploy on tomcat') {
+            steps {
+                echo 'artifact is deploying on tomcat'
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://ec2-52-90-52-15.compute-1.amazonaws.com:8080/')], contextPath: 'netflix.war', onFailure: false, war: '**/*.war'
+            }
+        }	
+    }
+}
